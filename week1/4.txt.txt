@@ -1,0 +1,118 @@
+1.
+const number1=10;
+const number2=5;
+const operator='+';
+let result;
+switch(operator){
+  case "+":
+    result=number1+number2;
+    break;
+  case "-":
+    result=number1-number2;
+    break;
+  case "*":
+    result=number1*number2;
+    break;
+  case "/":
+    if(number2!==0)
+    result=number1/number2;
+  else{
+    result="Eroare:impartire la zero";
+  }
+    break;
+  default:
+    result="Operator necunoscut";
+}
+console.log(`Rezultatul operatiei: ${number1} ${operator} ${number2} = ${result}`);
+
+2.const number=17;
+let semn;
+if (number > 0) {
+  semn = "pozitiv";
+} else if (number < 0) {
+  semn = "negativ";
+} else {
+  semn = "zero";
+}
+
+
+let paritate = (number % 2 === 0) ? "par" : "impar";
+
+
+function estePrim(n) {
+  if (n <2||n%2==0) return false;
+  if (n==2) return true;
+  for (let i = 3; i*i<= n; i+=2) {
+    if (n % i === 0) return false;
+  }
+  return true;
+}
+let primalitate = estePrim(number) ? "prim" : "nu este prim";
+
+console.log(`Numărul ${number} este ${semn}, ${paritate} și ${primalitate}.`);
+
+3.const temperature = 25;
+const unit = 'C'; // poate fi 'C' sau 'F'
+
+// Implementează conversia
+let convertedTemperature;
+let destinationUnit;
+
+if (unit === 'C') {
+  convertedTemperature = temperature * 9 / 5 + 32;
+  destinationUnit = 'F';
+} else if (unit === 'F') {
+  convertedTemperature = (temperature - 32) * 5 / 9;
+  destinationUnit = 'C';
+} else {
+  console.log("Unitate invalidă. Folosește 'C' sau 'F'.");
+  convertedTemperature = null;
+}
+
+// Afișează rezultatul 
+if (convertedTemperature !== null) {
+  console.log(
+    `${temperature} °${unit} este echivalent cu ${convertedTemperature.toFixed(2)} °${destinationUnit}`
+  );
+}
+
+4.
+
+const number = 7;
+console.log(`Tabelul de înmulțire pentru ${number}:`);
+
+for (let i = 1; i <= 10; i++) {
+  const produs = number * i;
+  console.log(`${number} x ${i} = ${produs}`);
+}
+
+5.
+const secretNumber = Math.floor(Math.random() * 100) + 1;
+
+
+const guesses = [50, 75, 62, 68, 67]; 
+
+let attempts = 0;
+let guessed = false;
+
+console.log('Bine ai venit la Jocul de Ghicit Numarul!');
+console.log('Încearcă să ghicești un număr între 1 și 100.');
+
+for (const guess of guesses) {
+  attempts++;
+  console.log(`Încercarea ${attempts}: ai ghicit ${guess}`);
+
+  if (guess === secretNumber) {
+    console.log(`Felicitări! Ai ghicit numărul secret ${secretNumber} din ${attempts} încercări.`);
+    guessed = true;
+    break;
+  } else if (guess < secretNumber) {
+    console.log('Numărul secret este mai mare.');
+  } else {
+    console.log('Numărul secret este mai mic.');
+  }
+}
+
+if (!guessed) {
+  console.log(`Nu ai ghicit numărul secret ${secretNumber}. Mai încearcă data viitoare!`);
+}

@@ -1,0 +1,26 @@
+ex1
+Scrie o funcție numită theBiggest care primește trei numere ca parametri și returnează cel mai mare dintre ele.
+function theBiggest(a, b, c) {
+  return Math.max(a, b, c);
+}
+
+Creează o funcție reverse care primește un șir de caractere și returnează șirul inversat.
+function reverse(str) {
+  return str.split('').reverse().join('');
+}
+
+Implementează o funcție filterEvenNumbers care primește un array de numere și returnează un nou array conținând doar numerele pare.
+function filterEvenNumbers(arr) {
+  return arr.filter(num => num % 2 === 0);
+}
+
+Creează o funcție repeat care primește un string și un număr, și returnează stringul repetat de numărul de ori specificat.
+function repeat(str, times) {
+  return str.repeat(times);
+}
+
+Scrie o funcție recursivă fibonacci care calculează al n-lea număr din șirul Fibonacci.
+function fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}

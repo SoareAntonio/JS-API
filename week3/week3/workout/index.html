@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exerciții de traversare și modificare DOM</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+      <h1>Exerciții de traversare DOM</h1>
+      <nav>
+        <ul id="menu">
+          <li><a href="#" class="menu-link">Acasă</a></li>
+          <li><a href="#" class="menu-link">Despre</a></li>
+          <li><a href="#" class="menu-link">Servicii</a></li>
+          <li><a href="#" class="menu-link">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section id="section1" class="content-section">
+        <h2>Sectiune 1</h2>
+        <p>Acesta este primul paragraf.</p>
+        <p>Acesta este al doilea paragraf.</p>
+        <button id="addButton">Adaugă element</button>
+      </section>
+
+      <section id="section2" class="content-section">
+        <h2>Sectiune 2</h2>
+        <ul id="itemList">
+          <li class="item">Element 1</li>
+          <li class="item">Element 2</li>
+          <li class="item">Element 3</li>
+        </ul>
+        <button id="removeButton">Elimină ultimul element</button>
+      </section>
+
+      <section id="section3" class="content-section">
+        <h2>Sectiune 3</h2>
+        <div id="moveTarget" class="bordered">
+          <p>Acest element va fi mutat.</p>
+        </div>
+        <div id="destination" class="bordered">
+          <p>Destinație pentru elementul mutat.</p>
+        </div>
+        <button id="moveButton">Mută elementul</button>
+        <button id="cloneButton">Clonează elementul</button>
+        <button id="resetBtn">Resetează poziția</button>
+        <button id="breadcrumbButton">Generează breadcrumb</button>
+        
+        <div id="breadcrumbOutput"></div>
+      </section>
+    </main>
+
+    <footer id="footer">
+      <p>&copy; 2023 Exemplu DOM</p>
+    </footer>
+  </div>
+  
+
+  <script src="script.js"></script>
+</body>
+</html>

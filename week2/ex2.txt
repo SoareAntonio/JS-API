@@ -1,0 +1,152 @@
+/*slice() — non-mutativă
+Creează o copie a unei porțiuni dintr-un array.
+Nu modifică array-ul original.
+Sintaxă: array.slice(start, end)
+start: indexul de început (inclusiv)
+end: indexul de sfârșit (exclusiv)*/
+const numbers=[10,20,30,40,50];
+const numberSlice = numbers.slice(1,4);
+console.log(numberSlice);
+
+/*splice() — mutativă
+Modifică array-ul original:
+Poți elimina elemente
+Poți adăuga elemente
+Sintaxă: array.splice(start, count, item1, item2, ...)
+start: indexul de unde să înceapă modificarea
+count: câte elemente să elimine
+item1, item2...: (opțional) elemente de adăugat*/
+let legume = ["morcov", "rosie", "castravete", "ceapa"];
+let eliminate = legume.splice(1, 2);
+
+console.log(eliminate); // ["rosie", "castravete"]
+console.log(legume);    // ["morcov", "ceapa"]
+
+let culori = ["rosu", "verde", "albastru"];
+culori.splice(1, 0, "galben");
+
+console.log(culori); // ["rosu", "galben", "verde", "albastru"]
+
+
+
+//1.Creează o funcție care primește un array de numere și returnează suma tuturor numerelor pare din array.
+function sumaPare(array) {
+  let suma = 0;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] % 2 === 0) {
+      suma += array[i];
+    }
+  }
+  return suma;
+}
+
+function sumaPare(array) {
+  let suma = 0;
+  for (let num of array) {
+    if (num % 2 === 0) {
+      suma += num;
+    }
+  }
+  return suma;
+}
+
+function sumaPare(array) {
+  return array.reduce((suma, num) => {
+    return num % 2 === 0 ? suma + num : suma;
+  }, 0);
+}
+
+const sumaPare = array => array.reduce((suma, num) => num % 2 === 0 ? suma + num : suma, 0);
+// Funcția este declarată cu sintaxă arrow apoi Se folosește reduce() direct pe array:apoi Condiția din interior:
+
+function sumaPare(array){
+  return array
+    .filter(num=>num%2===0)
+    .reduce((suma,num)=>suma+num,0);
+    /*suma este acumularea până în acel punct.
+      num este elementul curent.
+      0 este valoarea inițială a sumei.*/
+}
+const numere = [1, 2, 3, 4, 5, 6, 7, 8];
+const rezultat = sumaPare(numere);
+console.log(rezultat); // 20 (2 + 4 + 6 + 8)
+
+
+
+//2.Implementează o funcție care primește un array de cuvinte și returnează un nou array conținând doar cuvintele care au mai mult de 5 caractere.
+function filtreazaCuvinteLungi(cuvinte) {
+  return cuvinte.filter(cuvant => cuvant.length > 5);
+}
+const lista = ["floare", "pisică", "elefant", "soare", "cai", "avion"];
+const result = filtreazaCuvinteLungi(lista);
+
+console.log(result); // ["floare", "elefant", "avion"]
+
+function filtreazaCuvinteLungi(cuvinte) {
+  const rezultat = [];
+  for (let i = 0; i < cuvinte.length; i++) {
+    if (cuvinte[i].length > 5) {
+      rezultat.push(cuvinte[i]);
+    }
+  }
+  return rezultat;
+}
+
+function filtreazaCuvinteLungi(cuvinte) {
+  const rezultat = [];
+  for (const cuvant of cuvinte) {
+    if (cuvant.length > 5) {
+      rezultat.push(cuvant);
+    }
+  }
+  return rezultat;
+}
+
+function filtreazaCuvinteLungi(cuvinte) {
+  return cuvinte.reduce((rezultat, cuvant) => {
+    if (cuvant.length > 5) {
+      rezultat.push(cuvant);
+    }
+    return rezultat;
+  }, []);
+}
+function filtreazaCuvinteLungi(cuvinte) {
+  return cuvinte.map(c => c).filter(c => c.length > 5);
+}
+
+//3.Scrie o funcție care primește un array de numere și returnează un nou array în care fiecare număr este înmulțit cu indexul său din array.
+function inmultesteCuIndex(array) {
+  return array.map((numar, index) => numar * index);
+}
+const num = [5, 10, 15, 20];
+const rezultat3 = inmultesteCuIndex(num);
+console.log(rezultat3); // [0, 10, 30, 60]
+
+//4.Creează o funcție care primește două array-uri și returnează un array conținând elementele comune ambelor array-uri.
+function elementeComune(array1, array2) {
+  const rezultat = [];
+  for (let i = 0; i < array1.length; i++) {
+    if (array2.includes(array1[i])) {
+      rezultat.push(array1[i]);
+    }
+  }
+  return rezultat;
+}
+
+function elementeComune(array1, array2) {
+  return array1.filter(element => array2.includes(element));
+}
+const array1 = [1, 2, 3, 4];
+const array2 = [3, 4, 5, 6];
+
+const rezultat4 = elementeComune(array1, array2);
+console.log(rezultat4); // [3, 4]
+
+
+//5.Implementează o funcție care primește un array de obiecte cu structura {name, age} și returnează vârsta medie a tuturor persoanelor.
+function calculeazaVarstaMedie(persoane) {
+  if (persoane.length === 0) return 0; // evităm împărțirea la 0
+
+  const sumaVarstelor = persoane.reduce((total, persoana) => total + persoana.age, 0);
+  return sumaVarstelor / persoane.length;
+}

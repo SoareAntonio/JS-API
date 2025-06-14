@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manipulare DOM</title>
+  <link rel ="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 id="title">Exerciții de manipulare DOM</h1>
+
+  <div id="content">
+    <p>Paragraf inițial care va fi modificat.</p>
+  </div>
+
+  <div id="attributes-demo">
+    <img
+      id="image"
+      src="placeholder.jpg"
+      alt="Imagine placeholder"
+      width="200"
+    />
+    <a id="link" href="https://example.com">Link de test</a>
+  </div>
+
+  <div id="classes-demo" class="box">
+    <p>Element pentru demonstrarea manipulării claselor</p>
+  </div>
+
+  <div id="styles-demo">
+    <p>Element pentru demonstrarea manipulării stilurilor</p>
+  </div>
+
+  <div id="form-container">
+    <form id="testForm">
+      <div>
+        <label for="name">Nume:</label>
+        <input type="text" id="name" name="name" />
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" />
+      </div>
+      <div>
+        <label>
+          <input type="checkbox" name="subscribe" id="subscribe" />
+          Abonare la newsletter
+        </label>
+      </div>
+      <div>
+        <select name="country" id="country">
+          <option value="">Selectează țara</option>
+          <option value="ro">România</option>
+          <option value="us">SUA</option>
+          <option value="uk">Marea Britanie</option>
+          <option value="fr">Franța</option>
+        </select>
+      </div>
+      <button type="submit" id="submitBtn">Trimite</button>
+    </form>
+  </div>
+
+  <div id="manipulation-container">
+    <ul id="itemList">
+      <li>Element inițial</li>
+    </ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

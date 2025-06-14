@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exerciții de evenimente DOM</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 id="title">Exemplu de evenimente DOM</h1>
+
+  <section id="section1">
+    <h2>1. Evenimente de bază</h2>
+    <button id="clickBtn">Apasă-mă</button>
+    <p id="clickResult"></p>
+
+    <div id="hoverDemo">Treci mouse-ul peste acest element</div>
+  </section>
+
+  <section id="section2">
+    <h2>2. Formular și validare</h2>
+    <form id="myForm">
+      <div>
+        <label for="username">Nume utilizator:</label>
+        <input type="text" id="username" required />
+        <span id=" " class="error"></span>
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" required />
+        <span id="emailError" class="error"></span>
+      </div>
+      <button type="submit">Trimite</button>
+    </form>
+  </section>
+
+  <section id="section3">
+    <h2>3. Listă de sarcini (event delegation)</h2>
+    <input type="text" id="newTask" placeholder="Adaugă o sarcină nouă" />
+    <button id="addTask">Adaugă</button>
+    <ul id="taskList">
+      <li>Sarcina 1 <span class="delete">[x]</span></li>
+      <li>Sarcina 2 <span class="delete">[x]</span></li>
+      <li>Sarcina 3 <span class="delete">[x]</span></li>
+    </ul>
+    <div id="toast"></div>
+  </section>
+
+  <section id="section4">
+    <h2>4. Drag & Drop</h2>
+    <div id="dragMe">Trage-mă</div>
+  </section>
+
+  <section id="section5">
+    <h2>5. Debounce & Throttle</h2>
+    <input type="text" id="searchInput" placeholder="Caută..." />
+    <p id="searchStatus"></p>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

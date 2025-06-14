@@ -1,0 +1,48 @@
+Ce este arhitectura client-server?
+
+Arhitectura client-server este modelul fundamental pe care se bazează World Wide Web-ul și majoritatea aplicațiilor web moderne. Această arhitectură definește cum diferitele componente ale unei aplicații web comunică între ele pentru a oferi funcționalități utilizatorilor.
+
+Componentele principale:
+Client - Browser-ul web, aplicația mobile sau orice alt software care solicită resurse
+Server - Computerul sau serviciul care oferă resurse și răspunde la cereri
+Rețeaua - Infrastructura care conectează client-ul cu server-ul (Internet)
+
+Întrebări frecvente
+
+Care este diferența dintre HTTP și HTTPS?
+
+Răspuns: HTTPS este versiunea securizată a HTTP, care folosește criptare SSL/TLS pentru a proteja datele în timpul transmisiei. Browser-ele moderne favorizează HTTPS și restricționează anumite funcționalități pentru site-urile HTTP.
+
+
+Ce se întâmplă când fac o cerere HTTP?
+
+Răspuns:
+
+Browser-ul rezolvă numele domeniului în adresa IP (DNS lookup)
+Se stabilește o conexiune TCP cu server-ul
+Se trimite cererea HTTP
+Server-ul procesează cererea și trimite răspunsul
+Browser-ul primește și procesează răspunsul
+
+
+De ce primesc erori CORS?
+
+Răspuns: CORS este o măsură de securitate care împiedică script-urile să acceseze resurse de pe alte domenii fără permisiune. Server-ul trebuie să permită explicit accesul prin header-e speciale.
+
+
+Când să folosesc GET vs POST?
+
+Răspuns:
+
+GET: Pentru a obține date, fără efecte secundare, parametrii în URL
+POST: Pentru a trimite date, a crea resurse, datele în body, poate avea efecte secundare
+
+
+Ce înseamnă că HTTP este stateless?
+
+Răspuns: Fiecare cerere HTTP este independentă - server-ul nu își amintește cereri anterioare. Pentru a menține starea (ex: login), se folosesc mecanisme precum cookies sau token-uri.
+
+
+Pot să fac cereri HTTP către orice server?
+
+Răspuns: Din motive de securitate, browser-ele restricționează cererile cross-origin prin politica CORS. Poți face cereri doar către servere care permit explicit accesul de la domeniul tău.

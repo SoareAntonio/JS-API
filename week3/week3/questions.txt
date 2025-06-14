@@ -1,0 +1,206 @@
+Întrebări frecvente
+De ce nu pot folosi metode de array pe NodeList?
+
+Răspuns: NodeList este un obiect asemănător array-urilor, dar nu este un array veritabil, așa că nu moștenește metodele array-urilor precum `map()`, `filter()`, etc. Poți converti un NodeList în array folosind:
+
+const collection = document.querySelectorAll('.example')
+const array = Array.from(collection) // Metoda modernă
+// sau
+const array2 = [...collection] // Folosind spread operator
+După conversie, poți folosi toate metodele de array.
+
+
+Ce este shadow DOM și cum diferă de DOM-ul regular?
+
+Răspuns: Shadow DOM este o caracteristică a web components care permite încapsularea - un sub-arbore DOM separat care este atașat la un element dar separat de DOM-ul principal. Scopul principal este de a izola CSS și JavaScript pentru a preveni conflictele și a permite componentelor reutilizabile să funcționeze independent.
+
+Diferența principală este că elementele din shadow DOM sunt izolate - stilurile din afară nu le afectează, iar selecțiile DOM standard nu le accesează direct.
+
+// Exemplu de creare a unui shadow DOM
+const div = document.createElement('div')
+const shadowRoot = div.attachShadow({ mode: 'open' })
+shadowRoot.innerHTML = '<h2>Acesta este în Shadow DOM</h2>'
+document.body.appendChild(div)
+
+// Query-uri normale nu pot vedea în interiorul shadow DOM
+console.log(document.querySelector('h2')) // null
+Care este cea mai bună modalitate de a modifica conținutul?
+
+Răspuns: Alegerea depinde de ce doriți să realizați:
+
+textContent - pentru a seta sau obține text simplu (cea mai sigură și rapidă metodă)
+innerHTML - când doriți să inserați conținut HTML (comod dar potențial riscant)
+createElement + appendChild - cea mai structurată și sigură abordare, deși necesită mai mult cod
+
+
+De ce este periculoasă folosirea innerHTML cu date din surse externe?
+
+Răspuns: Folosirea innerHTML cu date introduse de utilizatori sau alte surse externe poate deschide aplicația către atacuri XSS (Cross-Site Scripting). Un atacator ar putea injecta cod JavaScript malițios care ar rula în browserul utilizatorului.
+
+În locul innerHTML cu date externe, folosiți:
+
+textContent pentru a adăuga text simplu
+Sanitizați conținutul HTML înainte de inserare
+Utilizați biblioteci de sanitizare precum DOMPurify
+
+
+Care este diferența dintre textContent și innerText?
+
+Răspuns: Ambele manipulează text, dar:
+
+textContent returnează tot textul, inclusiv conținutul din elemente <script> și <style>, precum și textul din elemente ascunse prin CSS
+innerText respectă stilizarea CSS, ignoră elementele ascunse și poate fi mai lent deoarece necesită informații despre layout
+
+
+Când ar trebui să folosesc classList în loc de className?
+
+Răspuns: classList este aproape întotdeauna preferabil față de className pentru că:
+
+Permite manipularea claselor individuale fără a afecta celelalte clase existente
+Oferă metode utile precum add(), remove(), toggle() și contains()
+Previne erorile de sintaxă când se manipulează spațiile între clase
+
+Folosiți className doar când doriți să înlocuiți complet toate clasele unui element.
+
+Care este diferența între event bubbling și event capturing?
+
+Răspuns: Evenimentele se propagă în două faze:
+
+- Capturing - De la document către elementul țintă (de sus în jos)
+- Bubbling - De la elementul țintă către document (de jos în sus)
+
+În mod implicit, event listeners sunt atașați pentru faza de bubbling. Pentru a atașa un listener pentru faza de capturing, setați al treilea parametru al `addEventListener` la `true`.
+
+// Listener pentru faza de bubbling (implicit)
+element.addEventListener('click', handler)
+
+// Listener pentru faza de capturing
+element.addEventListener('click', handler, true)
+
+Când ar trebui să folosesc event delegation?
+
+Răspuns: Event delegation este utilă în următoarele situații:
+
+1. Când aveți multe elemente similare care necesită același handler (ex: elemente de listă)
+2. Când elementele sunt adăugate sau eliminate dinamic
+3. Când doriți să reduceți numărul de event listeners și să îmbunătățiți performanța
+4. Când doriți să gestionați evenimente pentru elemente care nu există încă în DOM
+
+
+De ce `this` se comportă diferit în arrow functions vs. funcții tradiționale?
+
+Răspuns: În event handlers:
+
+- În funcții tradiționale, `this` se referă la elementul care a declanșat evenimentul
+- În arrow functions, `this` păstrează valoarea din contextul exterior (de obicei `window` sau obiectul care conține codul)
+
+// this = elementul care a declanșat evenimentul
+element.addEventListener('click', function () {
+  console.log(this) // elementul
+})
+
+// this = window sau contextul exterior
+element.addEventListener('click', () => {
+  console.log(this) // nu este elementul!
+})
+Folosiți funcții tradiționale când aveți nevoie de referință la element prin `this`, sau folosiți `event.currentTarget` cu arrow functions.
+
+
+Cum pot preveni memory leaks cu event listeners?
+
+Răspuns: Pentru a preveni memory leaks:
+
+1. Eliminați event listeners când componentele/elementele sunt eliminate din DOM
+2. Utilizați event delegation pentru a reduce numărul total de event listeners
+3. Fiți atenți la closure-uri care pot captura referințe la obiecte mari
+4. În aplicații SPA (Single Page Applications), eliminați listeners la schimbarea view-urilor
+
+// Exemplu de curățare corectă
+function setup() {
+  const button = document.querySelector('#myButton')
+  button.addEventListener('click', handleClick)
+
+  return function cleanup() {
+    button.removeEventListener('click', handleClick)
+  }
+}
+
+const cleanup = setup()
+// Mai târziu, când nu mai avem nevoie de handler:
+cleanup()
+
+Care este diferența dintre children și childNodes?
+
+
+Răspuns: Ambele proprietăți oferă acces la nodurile copil, dar cu diferențe importante:
+
+- `childNodes` returnează toate nodurile copil, inclusiv noduri text, comentarii și elemente
+- `children` returnează doar nodurile de tip element (tag-uri HTML)
+
+const element = document.querySelector('#example')
+console.log(element.childNodes.length) // Include text nodes și comentarii
+console.log(element.children.length) // Include doar elemente HTML
+
+Această diferență este importantă, deoarece spațiile albe între tag-uri sunt reprezentate ca noduri text în DOM și apar în `childNodes`, dar nu și în `children`.
+
+
+Cum gestionez nodurile text (whitespace) când traversez DOM-ul?
+
+
+Răspuns: Nodurile text (inclusiv spațiile albe) pot complica traversarea DOM-ului. Iată câteva strategii:
+
+1. Folosește `children` în loc de `childNodes` pentru a obține doar elementele
+2. Filtrează explicit nodurile text:
+
+Array.from(element.childNodes)
+  .filter((node) => node.nodeType !== Node.TEXT_NODE)
+  .forEach((node) => {
+    // Procesează doar nodurile non-text
+  })
+Verifică tipul nodului înainte de a-l procesa:
+
+for (let node of element.childNodes) {
+  if (node.nodeType === Node.ELEMENT_NODE) {
+    // Procesează doar elementele
+  }
+}
+
+Cum pot traversa DOM-ul eficient, având în vedere performanța?
+
+Răspuns: Pentru traversări eficiente ale DOM-ului:
+
+1. Limitează aria de căutare folosind selecția contextuală (pornește de la cel mai apropiat container în loc de document)
+2. Folosește `querySelector` direct pe elementul părinte când e posibil
+3. Caching-ul rezultatelor - stochează rezultatele traversărilor frecvente
+4. Folosește `children` în loc de `childNodes` când doar elementele sunt relevante
+5. Pentru liste mari, consideră tehnici de virtualizare (doar elementele vizibile să fie în DOM)
+
+// Ineficient - traversează tot DOM-ul
+const items = document.querySelectorAll('.item')
+
+// Mai eficient - limitează aria de căutare
+const container = document.querySelector('#container')
+const items = container.querySelectorAll('.item')
+
+Care este cel mai bun mod de a adăuga multiple elemente în DOM?
+
+
+Răspuns: Metoda optimă depinde de situație:
+
+1. Pentru adăugări simple: `appendChild` sau `append` pentru câteva elemente
+2. Pentru conținut mare bazat pe text/HTML: Construiește un string și folosește `innerHTML`
+3. Pentru multe elemente individuale: Folosește `DocumentFragment`
+
+// Abordarea DocumentFragment (cea mai eficientă pentru multe elemente)
+const fragment = document.createDocumentFragment()
+for (let i = 0; i < 1000; i++) {
+  const li = document.createElement('li')
+  li.textContent = `Item ${i}`
+  fragment.appendChild(li)
+}
+document.querySelector('#myList').appendChild(fragment)
+
+Abordarea modernă folosind template strings și innerHTML (când HTML-ul este sigur):
+
+const items = Array.from({ length: 1000 }, (_, i) => `<li>Item ${i}</li>`)
+document.querySelector('#myList').innerHTML = items.join('')

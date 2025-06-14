@@ -1,0 +1,108 @@
+Folosește metoda console.log() pentru a urmări fluxul execuției codului asincron
+Utilizează tab-ul Network din DevTools pentru a monitoriza request-urile HTTP
+Setează breakpoint-uri în cod pentru a depana operațiunile asincrone pas cu pas
+Folosește extensia "Promise Inspector" în Chrome pentru vizualizarea stărilor promisiunilor
+
+JavaScript este un limbaj de programare single-threaded, ceea ce înseamnă că poate executa o singură instrucțiune la un moment dat. Dar în aplicațiile web moderne avem nevoie să executăm multe operațiuni simultan: să solicităm date de la server, să procesăm fișiere mari, să interacționăm cu baze de date, și toate acestea fără a bloca interfața utilizatorului.
+
+În această lecție, vom învăța cum JavaScript utilizează mecanismele asincrone pentru a gestiona aceste provocări. Ai mai multe detalii în materialul pe care ți l-am pregătit în link.
+Întrebări Frecvente (FAQ)
+
+Î: De ce este JavaScript considerat single-threaded dar poate executa cod asincron?
+
+R: JavaScript rulează într-un singur fir de execuție (thread), dar browser-ul (sau Node.js) oferă API-uri care pot rula operațiuni în afara acestui fir. Event Loop-ul coordonează când rezultatele acestor operațiuni sunt procesate în firul principal.
+
+Î: Ce sunt Web APIs și cum se leagă de JavaScript asincron?
+
+R: Web APIs sunt funcționalități furnizate de browser (nu de JavaScript), cum ar fi setTimeout, fetch, evenimente DOM, etc., care pot executa operațiuni în fundal fără a bloca firul principal de JavaScript.
+
+
+Î: Când ar trebui să folosesc callbacks în JavaScript modern?
+
+R: Deși există alternative mai moderne (Promises, async/await), callback-urile sunt încă folosite în multe situații, cum ar fi gestionarea evenimentelor, funcții precum forEach, map, etc., și în biblioteci mai vechi.
+
+Î: În ce situații apar cel mai des probleme cu "Callback Hell"?
+
+R: "Callback Hell" apare cel mai des când ai o secvență de operațiuni asincrone care depind una de alta, cum ar fi multiple cereri la API-uri, operațiuni de citire/scriere, sau animații secvențiale.
+
+lectia3
+Întrebări Frecvente (FAQ)
+
+
+Î: Care este diferența principală între callbacks și Promises?
+
+
+R: Promises oferă un flux de control mai clar și evită "callback hell". De asemenea, gestionarea erorilor este mai simplă și mai consistentă cu Promises, și oferă metode precum .then(), .catch() și .finally() pentru un cod mai organizat.
+
+
+
+Î: Pot transforma orice funcție asincronă bazată pe callbacks într-una bazată pe Promises?
+
+
+R: Da, poți "promisifica" orice funcție bazată pe callbacks creând un nou Promise și apelând funcția originală în interiorul lui, redirectând rezultatul prin resolve sau reject.
+
+
+
+Î: Ce se întâmplă dacă apare o eroare într-un lanț de Promises și nu am un .catch()?
+
+
+R: Erorile negestionate în Promises vor genera o excepție "Unhandled Promise Rejection", care va fi afișată în consolă. În viitor, aceste erori ar putea termina procesul, așa că este întotdeauna bine să incluzi un .catch().
+
+
+
+Î: Există vreo limită pentru numărul de .then() pe care le pot înlănțui?
+
+
+R: Din punct de vedere teoretic, nu există o limită, dar lanțurile foarte lungi de Promises pot face codul greu de urmărit. În astfel de cazuri, async/await (pe care îl vom studia în lecția următoare) poate oferi o sintaxă mai clară.
+
+
+Concluzie
+
+În această lecție am învățat despre Promises, o modalitate modernă și puternică de a gestiona operațiunile asincrone în JavaScript. Promises rezolvă multe dintre problemele callback-urilor tradiționale, oferind un flux de control mai clar, o gestionare mai bună a erorilor și posibilitatea de a înlănțui ușor operațiunile asincrone.
+
+În următoarea lecție, vom explora async/await, o sintaxă și mai elegantă construită peste Promises, care face codul asincron să arate și să se comporte aproape ca și codul sincron, păstrând toate avantajele modelului asincron.
+
+//4
+Întrebări Frecvente (FAQ)
+
+
+Î: Care sunt avantajele async/await față de Promises?
+
+
+R: Async/await oferă o sintaxă mai clară și mai ușor de citit, care seamănă cu codul sincron. De asemenea, gestionarea erorilor este mai intuitivă cu blocuri try/catch. Sub capotă, async/await utilizează tot Promises.
+
+
+
+Î: Pot folosi await în afara unei funcții async?
+
+
+R: Nu, cuvântul cheie await poate fi folosit doar în interiorul unei funcții async. Totuși, începând cu ES2022, await poate fi folosit la nivel de top în modulele JavaScript.
+
+
+
+Î: Cum pot executa mai multe operațiuni async în paralel cu async/await?
+
+
+R: Poți folosi Promise.all(), Promise.race(), sau alte metode Promise împreună cu async/await pentru a rula operațiuni în paralel.
+
+
+
+Î: Cum pot simula întârzieri în funcțiile async?
+
+
+R: Poți crea o funcție de întârziere (delay):
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+async function example() {
+  console.log('Început')
+  await delay(2000) // Așteaptă 2 secunde
+  console.log('După 2 secunde')
+}
+
+
+Concluzie
+
+În această lecție, am învățat despre async/await, o abstracție elegantă peste Promises care face codul asincron mai ușor de scris și de înțeles. Această sintaxă ne permite să scriem operațiuni asincrone care să arate aproximativ ca și codul sincron tradițional, facilitând astfel mult dezvoltarea aplicațiilor.
+
+Async/await reprezintă un instrument esențial în toolbox-ul oricărui dezvoltator JavaScript modern, oferind o modalitate clară și expresivă de a gestiona operațiunile asincrone.

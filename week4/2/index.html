@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <script>
+    let sayHello =new Promise (function(resolve,reject){ 
+      reject('Unable to say hi');
+  
+        setTimeout(function(){
+          resolve('Hi,universe!');
+
+        },5000);  
+    });
+
+      sayHello.then(function(msg){
+        console.log(msg);
+      }).catch(function(error){
+        console.warn(error);
+      });
+
+
+
+    let count = new Promise (function (resolve,reject){
+      resolve(1);
+    });
+
+    //chain Promise.then() methods
+    count.then(function(num){
+      console.log(num);
+      return num+1;
+    }).then(function(num){
+      console.log(num);
+      return num+1;
+    }).then(function(num){
+      console.log(num);
+      return num+1;
+    });
+
+
+
+    new Promise(function (resolve,reject){
+      if(Math.random()<0.5){
+        reject(`We'll never know...`);
+      }
+      resolve(42);
+
+    }).then(function(answer){
+      console.log(answer);
+    }).then(function(error){
+      console.warn(error);
+    }).finally(function(){
+      console.log('I run no matter what!');
+    });
+
+
+
+    //basic syntax
+    fetch('https://jsonplaceholder.typicode.com/posts').then(function(response){
+      //The API call was succesful
+      console.log(response);
+
+    }).catch(function(error){
+      //There was an error
+      console.warn(error);
+    });
+
+    //getting json
+    fetch('https://jsonplaceholder.typicode.com/posts').then(function(response){
+      //The Api call was succesful
+      return response.json();
+    }).then(function(data){
+      //This is the Json from our response
+      console.log(data);
+    }).catch(function(error){
+      console.warn(error);
+    });
+
+
+
+    //Get the data from the responses
+    Promise.all([
+      fetch('https://jsonplaceholder.typicode.com/posts'),
+      fetch('https://jsonplaceholder.typicode.com/posts')
+    ]).then(function(responses){
+      //Get a Json object from each of the responses
+      return Promise.all(responses.map(function(response){
+        return response.json();
+      }));
+    }).then(function(data){
+      //You would do something with both sets of data here
+      console.log(data);
+    }).catch(function(error){
+      //if there's an error , log it
+      console.log(error);
+    });
+
+
+
+    async function asyncFn() {
+      await fetch('https://jsonplaceholder.typicode.com/posts').then(function(response){
+        return response.json();
+      }).then(function(data){
+        console.log('Async Fetch',data);
+      });
+      console.log('Async Message');
+      
+    }
+
+
+
+    //cand e async mereu va returna o promisiune 
+    async function getAnswer() 
+    {
+      return 42;
+    }
+
+    //assign the return to a variable
+    let answer=getTheAnswer();
+    console.log(answer);
+
+    //Use Promise.then() to get actual value
+    answer.then(function(data){
+      console.log(data);
+    });
+
+    async function logAnswer() {
+      let answer = await getTheAnswer();
+      console.log(answer);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+Care este diferența dintre == și ===?
+Răspuns: Operatorul == compară doar valorile, făcând conversii de tip automate, în timp ce === compară atât valorile cât și tipurile de date. Este recomandat să folosești === pentru a evita comportamente neașteptate.
+
+
+De ce typeof null returnează "object"?
+Răspuns: Aceasta este o eroare istorică în implementarea JavaScript. Deși null este un tip de date primitiv, typeof null returnează "object" din motive de compatibilitate cu versiunile vechi.
+
+
+Ce înseamnă "truthy" și "falsy" în JavaScript?
+Răspuns: Valorile "truthy" sunt interpretate ca true în contexte booleene, iar valorile "falsy" sunt interpretate ca false. Valorile falsy sunt: false, 0, "" (șir gol), null, undefined și NaN. Toate celelalte valori sunt truthy.
+
+
+Care este diferența dintre null și undefined?
+Răspuns: undefined reprezintă o variabilă declarată dar neinițializată, în timp ce null este o valoare atribuită în mod explicit pentru a indica absența unei valori sau a unui obiect. În comparații non-stricte, null == undefined este true, dar null === undefined este false.
+
+Întrebări frecvente
+
+Când să folosim for și când să folosim while?
+Răspuns: Folosește for când știi numărul exact de iterații de dinainte. Folosește while când numărul de iterații depinde de o condiție care se poate schimba în timpul execuției.
+
+
+Care este diferența dintre break și continue?
+Răspuns: break iese complet din buclă, terminând toate iterațiile viitoare. continue sare doar peste iterația curentă și continuă cu următoarea iterație.
+
+
+Ce se întâmplă dacă uit să incrementez contorul într-o buclă while?
+Răspuns: Se creează o buclă infinită, deoarece condiția nu se va schimba niciodată. Acest lucru poate bloca browser-ul sau duce la probleme de performanță.
+
+
+Pot folosi instrucțiunea switch cu tipuri diferite de date?
+Răspuns: JavaScript evaluează cazurile folosind comparația strictă (===). Poți folosi numere, șiruri sau alte valori, dar tipul trebuie să corespundă cu cel din expresia switch.

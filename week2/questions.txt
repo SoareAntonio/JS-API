@@ -1,0 +1,218 @@
+Care este diferența dintre declararea unei funcții și expresia de funcție?
+
+Răspuns: Principala diferență este "hoisting"-ul. Funcțiile declarate sunt ridicate (hoisted) în întregime și pot fi apelate înainte de a fi definite în cod. Expresiile de funcții sunt ridicate doar ca variabile, dar inițializarea lor se face la linia de cod respectivă.
+
+// Funcționează pentru că declarația funcției este hoisted
+console.log(declaredFunction()) // Afișează: "Funcționez!"
+
+function declaredFunction() {
+  return 'Funcționez!'
+}
+
+// Aruncă eroare deoarece doar variabila este hoisted, nu și atribuirea funcției
+console.log(expressionFunction()); // Eroare: expressionFunction is not a function
+
+const expressionFunction = function () {
+  return 'Nu funcționez înainte de definire!'
+}
+Ce înseamnă this în JavaScript?
+
+Răspuns: this este un cuvânt cheie care se referă la obiectul "context" al funcției curente. Valoarea lui this depinde de modul în care funcția este apelată:
+
+În metode de obiect, this se referă la obiectul care a apelat metoda
+În funcții globale, this se referă la obiectul global (window în browser)
+În funcții arrow, this păstrează valoarea din contextul înconjurător
+În evenimente, this se referă de obicei la elementul care a declanșat evenimentul
+document.querySelector("button").addEventListener("click", function () {
+  console.log(this); // this → elementul <button>
+});
+
+
+Când ar trebui să folosesc funcții arrow și când funcții tradiționale?
+
+Răspuns:
+
+Folosește funcții arrow pentru cod compact și când vrei să păstrezi valoarea lui this din contextul înconjurător.
+const numbers = [1, 2, 3];
+const squared = numbers.map(n => n * n); // scurt și clar
+
+class Timer {
+  constructor() {
+    this.seconds = 0;
+    setInterval(() => {
+      this.seconds++; // păstrează `this` din constructor
+    }, 1000);
+  }
+}
+
+
+Folosește funcții tradiționale când ai nevoie de propriul binding pentru this, când folosești constructori sau când ai nevoie de obiectul arguments.
+function sum() {
+  return Array.from(arguments).reduce((a, b) => a + b, 0);
+}
+
+function Person(name) {
+  this.name = name;
+}
+const p = new Person('Ana'); // funcțiile arrow nu pot fi folosite ca și constructori
+
+
+Ce este un closure și la ce este util?
+
+Răspuns: Un closure este o funcție care "ține minte" și poate accesa variabilele din scopul în care a fost creată, chiar după ce acel scop s-a încheiat. Este util pentru:
+
+Încapsularea datelor (simularea variabilelor private)
+function createBankAccount() {
+  let balance = 0;
+
+  return {
+    deposit(amount) {
+      balance += amount;
+    },
+    getBalance() {
+      return balance;
+    }
+  };
+}
+
+const account = createBankAccount();
+account.deposit(100);
+console.log(account.getBalance()); // 100
+// Nu poți accesa direct `balance` – este "privat"
+
+Crearea de factory functions
+function multiplier(factor) {
+  return function (x) {
+    return x * factor;
+  };
+}
+
+const double = multiplier(2);
+console.log(double(5)); // 10
+
+Implementarea de funcții curry și parțiale
+function add(a) {
+  return function (b) {
+    return a + b;
+  };
+}
+
+const add5 = add(5);
+console.log(add5(3)); // 8
+
+Memorarea rezultatelor (memoization)
+function memoize(fn) {
+  const cache = {};
+  return function (x) {
+    if (cache[x]) return cache[x];
+    const result = fn(x);
+    cache[x] = result;
+    return result;
+  };
+}
+
+const square = memoize(x => x * x);
+console.log(square(4)); // calculează și salvează
+console.log(square(4)); // returnează din cache
+
+
+Ce se întâmplă dacă accesez un index care nu există într-un array?
+
+Răspuns: JavaScript va returna undefined. Nu va genera o eroare.
+
+const arr = [1, 2, 3]
+console.log(arr[5]) // undefined
+
+Cum pot verifica dacă o variabilă este un array?
+
+Răspuns: Cel mai bun mod este să folosești metoda Array.isArray():
+
+const arr = [1, 2, 3]
+console.log(Array.isArray(arr)) // true
+console.log(Array.isArray('string')) // false
+
+Care este diferența dintre slice() și splice()?
+
+Răspuns:
+
+slice() este non-mutativă - returnează o copie a unei porțiuni din array fără a modifica array-ul original.
+splice() este mutativă - modifică array-ul original prin adăugarea sau eliminarea elementelor.
+
+
+De ce array-urile în JavaScript sunt considerate obiecte?
+
+Răspuns: În JavaScript, array-urile sunt un tip special de obiecte care au proprietăți numerice (indexurile) și proprietatea specială length. Poți confirma acest lucru cu:
+
+const arr = [1, 2, 3]
+console.log(typeof arr) // "object"
+
+Acest design permite array-urilor JavaScript să fie foarte flexibile (pot conține diferite tipuri de date), dar poate fi mai puțin eficient din punct de vedere al performanței comparativ cu array-urile din alte limbaje de programare. 
+
+Întrebări frecvente
+
+Care este diferența dintre notația cu punct și notația cu paranteze pătrate pentru accesarea proprietăților?
+
+Răspuns: Ambele notații permit accesul la proprietățile unui obiect, dar notația cu paranteze pătrate (obj['prop']) este mai flexibilă, permițând utilizarea variabilelor, a proprietăților cu spații și caractere speciale, sau a celor care încep cu cifre. Notația cu punct (obj.prop) este mai concisă, dar funcționează doar cu identificatori valizi JavaScript.
+
+
+Ce reprezintă cuvântul cheie this în contextul obiectelor?
+
+Răspuns: În contextul metodelor unui obiect, this face referire la obiectul care "posedă" metoda respectivă (obiectul din care metoda este apelată). Acest lucru permite metodelor să acceseze alte proprietăți ale aceluiași obiect.
+
+
+Care este diferența între copierea superficială (shallow copy) și copierea profundă (deep copy)?
+
+Răspuns:
+
+Copierea superficială creează un nou obiect care are copii ale proprietăților simple din obiectul original, dar pentru proprietățile care sunt obiecte sau array-uri, sunt copiate doar referințele (adică ambele obiecte vor împărtăși aceleași obiecte imbricate).
+Copierea profundă creează un nou obiect și apoi copiază recursiv toate proprietățile obiectului original, inclusiv obiectele imbricate. Astfel, modificările aduse obiectelor imbricate din copie nu afectează obiectul original.
+
+
+Ce metode putem folosi pentru a itera prin proprietățile unui obiect?
+
+Răspuns: Cele mai comune metode sunt:
+
+Bucla for...in (parcurge toate proprietățile enumerabile, inclusiv cele moștenite)
+Object.keys() + buclă (doar proprietățile proprii și enumerabile)
+Object.values() (pentru iterarea prin valori)
+Object.entries() (pentru iterarea prin perechi cheie-valoare)
+
+Întrebări frecvente
+
+De ce eroarea "Cannot read property 'x' of undefined" este atât de comună?
+
+Răspuns: Această eroare apare când încerci să accesezi o proprietate x a ceva ce este undefined. De obicei se întâmplă când:
+
+Un obiect așteptat este undefined
+O funcție care ar trebui să returneze un obiect returnează undefined
+O proprietate intermediară într-un lanț de acces (obj.a.b.c) este undefined
+Pentru a evita această eroare, poți folosi:
+
+Verificări explicite: if (obj && obj.a && obj.a.b) { ... }
+Operatorul de coalescență nulă: obj?.a?.b?.c
+Valori implicite: const val = (obj && obj.a) || defaultValue
+
+
+Cum poate un try-catch să afecteze performanța?
+
+Răspuns: Blocurile try-catch pot avea un impact ușor asupra performanței în unele motoare JavaScript, dar impactul este de obicei neglijabil în aplicațiile moderne. Nu ar trebui să eviți try-catch din motive de performanță. Este mai important să ai cod robust care gestionează erorile corect decât să câștigi optimizări minore de performanță.
+
+
+Când ar trebui să arunc (throw) erori vs. când să le gestionez?
+
+Răspuns:
+
+Aruncă erori când: 
+O condiție face imposibilă continuarea operației curente
+Clientul funcției tale ar trebui să decidă cum să gestioneze problema
+Problema este neașteptată și nu poate fi recuperată local
+Gestionează erori când: 
+Poți recupera în mod rezonabil din situație
+Ai logică specifică pentru a trata condiția de eroare
+Nu vrei ca eroarea să se propage la nivelurile superioare
+
+
+Care este diferența dintre erori și excepții?
+
+Răspuns: În JavaScript, termenii "eroare" și "excepție" sunt adesea folosiți interschimbabil. Tehnic, o excepție este un eveniment care perturbează fluxul normal de execuție și poate fi prinsă și gestionată. Toate obiectele aruncate în JavaScript (folosind throw) devin excepții, indiferent dacă sunt instanțe ale clasei Error sau nu.
+

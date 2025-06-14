@@ -1,0 +1,47 @@
+.highlight {
+      background-color: yellow;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+.delete {
+  color: red;
+  cursor: pointer;
+  margin-left: 10px;
+}
+    .hidden {
+      display: none;
+    }
+
+    #dragMe {
+      width: 100px;
+      height: 100px;
+      background-color: lightblue;
+      position: absolute;
+      cursor: grab;
+    }
+#searchStatus {
+  text-decoration: none !important;
+  color: black !important;
+}
+#toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 10;
+}
+
+#toast.show {
+  opacity: 1;
+}

@@ -1,0 +1,34 @@
+.highlight {
+      background-color: yellow;
+    }
+
+.bordered {
+  border: 2px solid blue;
+  padding: 5px;
+  margin: 5px;
+}
+
+.hidden {
+  display: none;
+}
+#moveTarget {
+  width: 200px;
+  height: auto;
+  background-color: lightblue;
+  position: absolute; /* esențial pentru mutare liberă */
+  top: 100px;
+  left: 100px;
+  cursor: grab;
+  user-select: none;
+  padding: 10px;
+  border: 2px solid #00aaff;
+  border-radius: 8px;
+}
+
+#moveTarget.dragging {
+  cursor: grabbing;
+}
+#section3 {
+  position: relative;
+  min-height: 300px;
+}

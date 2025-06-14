@@ -1,0 +1,56 @@
+Ce este Fetch API?
+
+Fetch API este o interfață modernă și puternică pentru realizarea de cereri HTTP în JavaScript. Este o alternativă mai elegantă și mai flexibilă la vechiul XMLHttpRequest, oferind un mod mai curat de a comunica cu servere și API-uri.
+
+Caracteristici principale:
+Bazat pe Promises - Utilizează Promises pentru gestionarea operațiunilor asincrone
+Flexibil - Suportă toate tipurile de cereri HTTP (GET, POST, PUT, DELETE, etc.)
+Modern - Sintaxă mai curată și mai ușor de înțeles
+Integrat - Face parte din Web API-urile browser-ului modern
+
+Întrebări frecvente
+
+Care este diferența dintre fetch() și XMLHttpRequest?
+
+Răspuns: Fetch API este mai modern și mai ușor de folosit. Folosește Promises nativ, are o sintaxă mai curată și oferă mai multe funcționalități built-in. XMLHttpRequest este vechea metodă, mai verbos și mai greu de gestionat.
+
+De ce fetch() nu respinge Promise-ul pentru coduri de status HTTP precum 404 sau 500?
+
+Răspuns: Fetch consideră că o cerere HTTP este "reușită" dacă serverul răspunde, indiferent de codul de status. Doar erorile de rețea (server down, no internet) cauzează respingerea Promise-ului. Trebuie să verifici manual response.ok sau response.status.
+
+Cum pot anula o cerere fetch în curs de desfășurare?
+
+Răspuns: Folosești AbortController:
+
+const controller = new AbortController()
+
+fetch(url, { signal: controller.signal })
+  .then((response) => response.json())
+  .catch((error) => {
+    if (error.name === 'AbortError') {
+      console.log('Cererea a fost anulată')
+    }
+  })
+
+// Pentru a anula cererea
+controller.abort()
+
+Fetch funcționează în toate browser-ele?
+
+Răspuns: Fetch este suportat în toate browser-ele moderne. Pentru browser-ele mai vechi (Internet Explorer), poți folosi un polyfill precum whatwg-fetch.
+
+
+Cum gestionez autentificarea cu fetch?
+
+Răspuns: Folosind header-ul Authorization:
+
+fetch(url, {
+  headers: {
+    Authorization: 'Bearer ' + token,
+    'Content-Type': 'application/json',
+  },
+})
+
+Ce este CORS și cum îl gestionez?
+
+Răspuns: CORS (Cross-Origin Resource Sharing) este o politică de securitate care restricționează cererile între domenii diferite. Server-ul trebuie să permită explicit cererile de la domeniul tău prin header-e speciale. În dezvoltare, poți folosi un proxy sau extensii de browser pentru a dezactiva temporar CORS.

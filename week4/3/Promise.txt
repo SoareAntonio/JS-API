@@ -1,0 +1,81 @@
+Imaginea explică modul în care JavaScript execută o promisiune (Promise) și evidențiază cele mai importante componente ale event loop-ului și cozilor implicate. Hai să trecem direct la explicații clare:
+
+🧠 Ce este o Promise?
+O promisiune este un obiect care reprezintă finalizarea (sau eșecul) unei operații asincrone. Are 3 stări:
+
+pending – în așteptare
+
+fulfilled – rezolvată cu succes
+
+rejected – a eșuat
+
+🔍 Ce reprezintă fiecare element din imagine:
+1. Call Stack (Stiva de apeluri)
+Aceasta este pila principală unde se execută funcțiile JavaScript sincron. De exemplu:
+
+new Promise((resolve, reject) => { ... }) // Se execută aici
+
+
+2. Web APIs
+Aici ajung operațiile asincrone, precum setTimeout, fetch, DOM events etc. Acestea sunt gestionate de browser, nu de motorul JavaScript.
+
+Exemplu:
+
+setTimeout(() => resolve("Done!"), 100)
+
+Funcția callback este trimisă aici și așteaptă să treacă timpul.
+
+3. Task Queue (sau Callback Queue / Macrotask Queue)
+După ce o operație asincronă (ex: setTimeout) s-a încheiat, callback-ul merge în coada de task-uri, unde așteaptă să fie preluat de event loop.
+
+4. Microtask Queue
+Aici intră callback-urile .then(), .catch() și async/await imediat ce o promisiune este rezolvată. Microtask-urile au prioritate mai mare decât task-urile.
+
+Exemplu:
+
+Promise.resolve("OK").then(result => console.log(result))
+// `console.log(result)` va ajunge în Microtask Queue
+5. Event Loop
+Este mecanismul care leagă totul:
+
+Dacă Call Stack e gol:
+
+Rulează tot ce este în Microtask Queue până se golește.
+
+Abia apoi ia primul task din Task Queue.
+
+🧪 Exemplu concret
+
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Timeout 100ms");
+}, 100);
+
+Promise.resolve("Done!").then((result) => {
+  console.log(result);
+});
+
+console.log("End");
+
+🔁 Ordinea de execuție:
+console.log("Start") → Call Stack
+
+setTimeout(...) → Web APIs → Task Queue
+
+Promise.resolve(...).then(...) → Microtask Queue
+
+console.log("End") → Call Stack
+
+Apoi:
+
+Microtask: console.log("Done!")
+
+Apoi task: console.log("Timeout 100ms")
+
+📤 Output final:
+
+Start
+End
+Done!
+Timeout 100ms

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Variables in JavaScript</title>
+</head>
+<body>
+    <h1>JavaScript Example with let, const, and var</h1>
+
+    <script>
+        // Declare variables
+        let name = "Soare Antonio Iulian";
+        const country = "Romania";
+        var city = "Iasi";
+
+        // Display values
+        console.log("Name (let):", name);
+        console.log("Country (const):", country);
+        console.log("City (var):", city);
+
+        // Constant for birth date
+        const birthDate = "04-09-2005";
+
+        // Variable for age
+        let age = 19;
+
+        // Increment age
+        age += 1;
+
+        // Display result
+        console.log("Birth date:", birthDate);
+        console.log("Age after increment:", age);
+    </script>
+</body>
+</html>
+
+1. 
+console.log(typeof 42);              
+console.log(typeof 'hello');         
+console.log(typeof true);           
+console.log(typeof undefined);      
+console.log(typeof null);            
+console.log(typeof {});              
+console.log(typeof []);              
+console.log(typeof function () {}); 
+
+
+2. :
+
+
+console.log(String(42));         
+console.log(String(true));     
+console.log(String(false));      
+console.log(String(null));       
+console.log(String(undefined));  
+console.log(String('3.14'));     
+
+
+console.log(Number(42));         
+console.log(Number(true));       
+console.log(Number(false));    
+console.log(Number(null));      
+console.log(Number(undefined));  
+console.log(Number('3.14'));     
+
+
+3. 
+
+let age = 30;
+let isInRange = age >= 18 && age <= 65;
+console.log("Is age between 18 and 65?", isInRange);
+
+
+4. 
+
+let age = 16;
+let status = age >= 18 ? "adult" : "minor";
+console.log("Status:", status);
+
+
+5. 
+
+let name = "Antonio";
+let age = 19;
+let info = `My name is ${name}, I am ${age} years old and I am ${age >= 18 ? "an adult" : "a minor"}.`;
+console.log(info);
+
+---------------
+function getNumber(number)
+{
+  return number%2 ===0?"par":"impar";
+}
+console.log(getNumber(4));
+console.log(getNumber(7));
+
+function getGradeEvaluation(grade) {
+    if (grade >= 9 && grade <= 10) {
+        return "Excelent";
+    } else if (grade >= 7 && grade <= 8) {
+        return "Bine";
+    } else if (grade >= 5 && grade <= 6) {
+        return "Satisfăcător";
+    } else {
+        return "Nesatisfăcător";
+    }
+}
+console.log(getGradeEvaluation(9)); 
+console.log(getGradeEvaluation(6)); 
+console.log(getGradeEvaluation(3)); 
+
+for (let i = 1; i <= 100; i++) {
+    if (i % 3 === 0 && i % 5 === 0) {
+        console.log("FizzBuzz");
+    } else if (i % 3 === 0) {
+        console.log("Fizz");
+    } else if (i % 5 === 0) {
+        console.log("Buzz");
+    } else {
+        console.log(i);
+    }
+}
+
+function sumArray(arr) {
+    let sum = 0;
+    for (let num of arr) {
+        sum += num;
+    }
+    return sum;
+}
+console.log(sumArray([1, 2, 3, 4, 5]));
+
+function reverseString(str) {
+    let reversed = "";
+    for (let i = str.length - 1; i >= 0; i--) {
+        reversed += str[i];
+    }
+    return reversed;
+}
+console.log(reverseString("Antonio"));
+
+------------------------
+1.
+const number1=10;
+const number2=5;
+const operator='+';
+let result;
+switch(operator){
+  case "+":
+    result=number1+number2;
+    break;
+  case "-":
+    result=number1-number2;
+    break;
+  case "*":
+    result=number1*number2;
+    break;
+  case "/":
+    if(number2!==0)
+    result=number1/number2;
+  else{
+    result="Eroare:impartire la zero";
+  }
+    break;
+  default:
+    result="Operator necunoscut";
+}
+console.log(`Rezultatul operatiei: ${number1} ${operator} ${number2} = ${result}`);
+
+2.const number=17;
+let semn;
+if (number > 0) {
+  semn = "pozitiv";
+} else if (number < 0) {
+  semn = "negativ";
+} else {
+  semn = "zero";
+}
+
+
+let paritate = (number % 2 === 0) ? "par" : "impar";
+
+
+function estePrim(n) {
+  if (n <2||n%2==0) return false;
+  if (n==2) return true;
+  for (let i = 3; i*i<= n; i+=2) {
+    if (n % i === 0) return false;
+  }
+  return true;
+}
+let primalitate = estePrim(number) ? "prim" : "nu este prim";
+
+console.log(`Numărul ${number} este ${semn}, ${paritate} și ${primalitate}.`);
+
+3.const temperature = 25;
+const unit = 'C'; // poate fi 'C' sau 'F'
+
+// Implementează conversia
+let convertedTemperature;
+let destinationUnit;
+
+if (unit === 'C') {
+  convertedTemperature = temperature * 9 / 5 + 32;
+  destinationUnit = 'F';
+} else if (unit === 'F') {
+  convertedTemperature = (temperature - 32) * 5 / 9;
+  destinationUnit = 'C';
+} else {
+  console.log("Unitate invalidă. Folosește 'C' sau 'F'.");
+  convertedTemperature = null;
+}
+
+// Afișează rezultatul 
+if (convertedTemperature !== null) {
+  console.log(
+    `${temperature} °${unit} este echivalent cu ${convertedTemperature.toFixed(2)} °${destinationUnit}`
+  );
+}
+
+4.
+
+const number = 7;
+console.log(`Tabelul de înmulțire pentru ${number}:`);
+
+for (let i = 1; i <= 10; i++) {
+  const produs = number * i;
+  console.log(`${number} x ${i} = ${produs}`);
+}
+
+5.
+const secretNumber = Math.floor(Math.random() * 100) + 1;
+
+
+const guesses = [50, 75, 62, 68, 67]; 
+
+let attempts = 0;
+let guessed = false;
+
+console.log('Bine ai venit la Jocul de Ghicit Numarul!');
+console.log('Încearcă să ghicești un număr între 1 și 100.');
+
+for (const guess of guesses) {
+  attempts++;
+  console.log(`Încercarea ${attempts}: ai ghicit ${guess}`);
+
+  if (guess === secretNumber) {
+    console.log(`Felicitări! Ai ghicit numărul secret ${secretNumber} din ${attempts} încercări.`);
+    guessed = true;
+    break;
+  } else if (guess < secretNumber) {
+    console.log('Numărul secret este mai mare.');
+  } else {
+    console.log('Numărul secret este mai mic.');
+  }
+}
+
+if (!guessed) {
+  console.log(`Nu ai ghicit numărul secret ${secretNumber}. Mai încearcă data viitoare!`);
+}
+

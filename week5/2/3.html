@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Postări Utilizator</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input, button { padding: 8px; margin-right: 10px; }
+    .post { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Postări Utilizator</h1>
+  <input type="number" id="userIdInput" placeholder="ID Utilizator" min="1" />
+  <button onclick="obtinePosturi()">Obține Posts</button>
+  <div id="mesaj" class="error"></div>
+  <div id="rezultate"></div>
+  <script src="3.js">
+  </script>
+  
+</body>
+</html>
