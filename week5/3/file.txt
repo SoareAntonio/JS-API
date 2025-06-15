@@ -1,0 +1,34 @@
+Ce este localStorage?
+localStorage este o funcționalitate a browser-ului care permite stocarea datelor sub formă de perechi cheie-valoare în browser-ul utilizatorului. Datele stocate în localStorage:
+
+Persistă chiar și după închiderea browser-ului
+Sunt specifice domeniului (site-ului)
+Au o capacitate limitată (de obicei 5-10MB)
+Sunt sincrone și pot bloca thread-ul principal
+
+Concluzii
+
+localStorage este un instrument puternic pentru stocarea datelor în browser, oferind:
+
+✅ Avantaje:
+
+Simplitate în utilizare
+Persistență datelor
+Viteză de acces
+Suport excelent în browsere
+
+⚠️ Limitări:
+
+Capacitate limitată
+Doar string-uri
+Operațiuni sincrone
+Vulnerabil la XSS
+
+Folosește localStorage pentru:
+
+Preferințe utilizator
+Cache pentru date frecvent accesate
+Stare aplicației între sesiuni
+Formulare draft
+
+Pentru aplicații complexe cu cerințe mari de storage, consideră alternative precum IndexedDB sau cloud storage.
