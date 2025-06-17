@@ -1,34 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Manager de Setări</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>Setări utilizator</h1>
-
-    <label for="theme">Temă:</label>
-    <select id="theme">
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-    </select>
-
-    <label for="language">Limbă:</label>
-    <select id="language">
-      <option value="ro">Română</option>
-      <option value="en">English</option>
-    </select>
-
-    <label for="fontSize">Mărime font:</label>
-    <input type="number" id="fontSize" min="10" max="30" value="14">
-
+    <h1>Setări Utilizator</h1>
+    
     <label>
-      <input type="checkbox" id="notifications"> Notificări activate
+      Tema:
+      <select id="theme">
+        <option value="light">Luminoasă</option>
+        <option value="dark">Întunecată</option>
+      </select>
     </label>
 
-    <button onclick="saveSettings()">Salvează</button>
+    <label>
+      Limba:
+      <select id="language">
+        <option value="ro">Română</option>
+        <option value="en">English</option>
+      </select>
+    </label>
+
+    <label>
+      Mărimea fontului:
+      <input type="number" id="fontSize" min="10" max="30" value="16" /> px
+    </label>
+
+    <label>
+      Notificări:
+      <input type="checkbox" id="notifications" />
+    </label>
+
+    <div class="buttons">
+      <button onclick="saveSettings()">💾 Salvează</button>
+      <button onclick="resetSettings()">🔄 Reset</button>
+    </div>
   </div>
 
   <script src="script.js"></script>

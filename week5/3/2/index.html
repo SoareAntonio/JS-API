@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Coș de Cumpărături</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Magazin</h1>
+
+  <div class="products">
+    <div class="product" data-id="1" data-name="Laptop" data-price="3500">
+      <h2>Laptop</h2>
+      <p>Preț: 3500 RON</p>
+      <button onclick="addToCart(this)">Adaugă în coș</button>
+    </div>
+
+    <div class="product" data-id="2" data-name="Mouse" data-price="150">
+      <h2>Mouse</h2>
+      <p>Preț: 150 RON</p>
+      <button onclick="addToCart(this)">Adaugă în coș</button>
+    </div>
+
+    <div class="product" data-id="3" data-name="Tastatură" data-price="250">
+      <h2>Tastatură</h2>
+      <p>Preț: 250 RON</p>
+      <button onclick="addToCart(this)">Adaugă în coș</button>
+    </div>
+  </div>
+
+  <h2>Coșul tău</h2>
+  <table id="cart">
+    <thead>
+      <tr>
+        <th>Produs</th>
+        <th>Cantitate</th>
+        <th>Preț</th>
+        <th>Total</th>
+        <th>Acțiune</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h3>Total general: <span id="grandTotal">0</span> RON</h3>
+
+  <script src="script.js"></script>
+</body>
+</html>

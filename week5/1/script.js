@@ -79,6 +79,49 @@ Returnează un obiect structurat cu:
 status: Codul HTTP (e.g., 200).
 headers: Toate headerele (convertite din Headers la obiect JS).
 body: Conținutul parsat (sau null dacă există eroare). */
+function parseHttpResponse(response) {
+  // Separăm headerele de corp
+  const [headerPart, body] = response.split('\r\n\r\n');
+
+  // Separăm liniile din headere
+  const lines = headerPart.split('\r\n');
+
+  // Linia de status (ex: HTTP/1.1 200 OK)
+  const statusLine = lines[0];
+  const [protocol, statusCode, ...statusMessageParts] = statusLine.split(' ');
+  const statusMessage = statusMessageParts.join(' ');
+
+  // Parsăm headerele rămase
+  const headers = {};
+  for (let i = 1; i < lines.length; i++) {
+    const [key, value] = lines[i].split(': ');
+    headers[key] = value;
+  }
+
+  return {
+    protocol,
+    statusCode: parseInt(statusCode, 10),
+    statusMessage,
+    headers,
+    body
+  };
+}
+const rawResponse = `HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: 20\r\n\r\n<h1>Hello</h1>`;
+const result = parseHttpResponse(rawResponse);
+
+console.log(result);
+/*
+{
+  protocol: 'HTTP/1.1',
+  statusCode: 200,
+  statusMessage: 'OK',
+  headers: {
+    'Content-Type': 'text/html',
+    'Content-Length': '20'
+  },
+  body: '<h1>Hello</h1>'
+}
+*/
 
 /*Exercițiul 3: Creează un mic sistem de cache pentru cererile HTTP care: 
 Salvează răspunsurile pe baza URL-ului
@@ -176,51 +219,62 @@ function jsonToFormData(json) {
 
 //varianta doi
 
-function convertData(input, fromType, toType) {
-  let intermediate = {};
+function convertDataFormat(input, from, to) {
+  let dataObj;
 
-  // Pasul 1: convertim în obiect JS intermediar
-  if (fromType === 'query') {
-    const params = new URLSearchParams(input);
-    for (const [key, value] of params.entries()) {
-      intermediate[key] = value;
-    }
-  } else if (fromType === 'formData') {
-    for (const [key, value] of input.entries()) {
-      intermediate[key] = value;
-    }
-  } else if (fromType === 'json') {
-    intermediate = JSON.parse(input);
-  } else {
-    throw new Error(`Format necunoscut: ${fromType}`);
+  // Pasul 1: Convertim totul mai întâi într-un obiect JS
+  switch (from) {
+    case 'query':
+      dataObj = Object.fromEntries(new URLSearchParams(input));
+      break;
+
+    case 'formdata':
+      if (input instanceof FormData) {
+        dataObj = Object.fromEntries(input.entries());
+      } else {
+        dataObj = { ...input }; // presupunem că e deja obiect
+      }
+      break;
+
+    case 'json':
+      dataObj = typeof input === 'string' ? JSON.parse(input) : input;
+      break;
+
+    default:
+      throw new Error('Format de intrare necunoscut: ' + from);
   }
 
-  // Pasul 2: convertim din obiectul intermediar în formatul dorit
-  if (toType === 'query') {
-    return new URLSearchParams(intermediate).toString();
-  } else if (toType === 'formData') {
-    const formData = new FormData();
-    for (const key in intermediate) {
-      formData.append(key, intermediate[key]);
-    }
-    return formData;
-  } else if (toType === 'json') {
-    return JSON.stringify(intermediate);
-  } else {
-    throw new Error(`Format necunoscut: ${toType}`);
+  // Pasul 2: Convertim obiectul JS în formatul dorit
+  switch (to) {
+    case 'query':
+      return new URLSearchParams(dataObj).toString();
+
+    case 'formdata':
+      const fd = new FormData();
+      for (const [key, value] of Object.entries(dataObj)) {
+        fd.append(key, value);
+      }
+      return fd;
+
+    case 'json':
+      return JSON.stringify(dataObj);
+
+    default:
+      throw new Error('Format de ieșire necunoscut: ' + to);
   }
 }
 
-// JSON → query string
-const json = '{"name":"Alice","age":"25"}';
-console.log(convertData(json, 'json', 'query'));
-// Output: name=Alice&age=25
+// 1. Query string → JSON
+console.log(convertDataFormat('name=John&age=30', 'query', 'json')); 
+// => '{"name":"John","age":"30"}'
 
-// Query → JSON
-const qs = 'name=Bob&job=dev';
-console.log(convertData(qs, 'query', 'json'));
-// Output: {"name":"Bob","job":"dev"}
+// 2. JSON → Query string
+console.log(convertDataFormat({ name: 'Ana', lang: 'JS' }, 'json', 'query')); 
+// => 'name=Ana&lang=JS'
 
-// JSON → FormData
-const fd = convertData('{"city":"Paris","lang":"fr"}', 'json', 'formData');
-console.log([...fd.entries()]); // [["city", "Paris"], ["lang", "fr"]]
+// 3. JSON → FormData
+const fd = convertDataFormat({ a: '1', b: '2' }, 'json', 'formdata');
+for (const pair of fd.entries()) {
+  console.log(pair); 
+}
+// => ['a', '1'], ['b', '2']

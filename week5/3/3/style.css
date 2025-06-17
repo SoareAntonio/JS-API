@@ -1,0 +1,40 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f4f4f4;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.controls {
+  margin-bottom: 15px;
+}
+
+input[type="text"] {
+  padding: 8px;
+  width: 250px;
+}
+
+button {
+  padding: 8px 12px;
+  margin-left: 10px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  background: white;
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 5px;
+}

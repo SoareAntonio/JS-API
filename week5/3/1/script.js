@@ -1,37 +1,50 @@
-function saveSettings() {
-  const theme = document.getElementById('theme').value;
-  const language = document.getElementById('language').value;
-  const fontSize = document.getElementById('fontSize').value;
-  const notifications = document.getElementById('notifications').checked;
+/* Exercițiul 1: Manager de setări
 
+Creează o aplicație care salvează și încarcă setările utilizatorului:
+
+Tema (light/dark)
+Limba (ro/en)
+Mărimea fontului
+Setări de notificări*/
+
+function saveSettings() {
   const settings = {
-    theme,
-    language,
-    fontSize,
-    notifications
+    theme: document.querySelector('#theme').value,
+    language: document.querySelector('#language').value,
+    fontSize: document.querySelector('#fontSize').value,
+    notifications: document.querySelector('#notifications').checked
   };
 
   localStorage.setItem('userSettings', JSON.stringify(settings));
   applySettings(settings);
-  alert('Setările au fost salvate!');
-}
-
-function applySettings(settings) {
-  document.body.className = settings.theme;
-  document.body.style.fontSize = settings.fontSize + 'px';
+  alert("Setările au fost salvate!");
 }
 
 function loadSettings() {
-  const data = localStorage.getItem('userSettings');
-  if (!data) return;
+  const settings = JSON.parse(localStorage.getItem('userSettings'));
+  if (!settings) return;
 
-  const settings = JSON.parse(data);
-  document.getElementById('theme').value = settings.theme;
-  document.getElementById('language').value = settings.language;
-  document.getElementById('fontSize').value = settings.fontSize;
-  document.getElementById('notifications').checked = settings.notifications;
+  document.querySelector('#theme').value = settings.theme;
+  document.querySelector('#language').value = settings.language;
+  document.querySelector('#fontSize').value = settings.fontSize;
+  document.querySelector('#notifications').checked = settings.notifications;
 
   applySettings(settings);
+}
+
+function applySettings(settings) {
+  document.body.style.fontSize = `${settings.fontSize}px`;
+
+  if (settings.theme === 'dark') {
+    document.body.classList.add('dark-mode');
+  } else {
+    document.body.classList.remove('dark-mode');
+  }
+}
+
+function resetSettings() {
+  localStorage.removeItem('userSettings');
+  location.reload();
 }
 
 window.onload = loadSettings;
