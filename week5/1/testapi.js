@@ -52,3 +52,113 @@ deletePost(1).then(success => {
     console.log("Ștergerea a eșuat.")
   }
 })
+
+
+//cerere get simpla catre JSONPlaceholder
+async function getUsers() {
+  try{
+    const response=await fetch('<https://jsonplaceholder.typicode.com/users>')
+
+    if(!response.ok){
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const users=await response.json()
+    console.log('Utilizatori:',users)
+    return users
+  } catch (error){
+    console.error('Eroare la obtinerea utilizatorilor:',error)
+  }
+  
+}
+getUsers();
+
+
+//cerere POST
+async function createPost(title,body,userId) {
+  try{
+    const response = await fetch('<https://jsonplaceholder.typicode.com/posts>',{
+      method: 'POST',
+      headers:{
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({
+        title:title,
+        body:body,
+        userId:userId,
+      }),
+    })
+    if(!response.ok){
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const newPost = await response.json()
+    console.log('Post creat:', newPost)
+    return newPost
+  } catch (error){
+    console.error('Eroare la crearea post-ului',error)
+  }
+  
+}
+
+createPost('Titlul meu','Continutul post-ului',1);
+
+
+//cerere PUT
+async function updatePost(postId,title,body,userId) {
+  try{
+    const response = await fetch(
+      'https://jsonplaceholder.typicode.com/posts/${postId}',
+      {
+      method: 'PUT',
+      headers:{
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({
+        id:postId,
+        title:title,
+        body:body,
+        userId:userId,
+      }),
+    }
+  )
+    if(!response.ok){
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const updatePost = await response.json()
+    console.log('Post actualizat:', updatePost)
+    return updatePost
+  } catch (error){
+    console.error('Eroare la actualizarea post-ului',error)
+  }
+  
+}
+
+updatePost(1,'Titlu actualizat','Continut actualizat',1);
+
+//cerere delete
+async function deletePost(postId) {
+  try{
+    const response=await fetch(
+      'https://jsonplaceholder.typicode.com/posts/${postId}',
+      {
+        method:'DELETE', 
+      }
+    )
+
+    if(!response.ok){
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    console.log(`Post cu ID-ul ${postId} a fost sters`)
+    return true
+  }catch (error){
+    console.error('Eroare la stergerea post-ului',error)
+    return false
+  }
+  
+
+
+}
+
+deletePost(1);

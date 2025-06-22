@@ -1,0 +1,117 @@
+✅ Folosește Arrow Functions când:
+Vrei să păstrezi this din contextul părinte
+
+js
+Copiază
+Editează
+class MyComponent {
+  constructor() {
+    this.value = 42;
+  }
+
+  logValue = () => {
+    console.log(this.value); // `this` e păstrat din clasa părinte
+  }
+}
+Scrii funcții scurte (one-liner)
+
+js
+Copiază
+Editează
+const add = (a, b) => a + b;
+Folosești map, filter, reduce, forEach
+
+js
+Copiază
+Editează
+const nums = [1, 2, 3];
+const squares = nums.map(n => n * n);
+Scrii callback-uri unde nu ai nevoie de propriul this
+
+js
+Copiază
+Editează
+setTimeout(() => console.log('Done!'), 1000);
+Folosești React (ex: handlers)
+
+js
+Copiază
+Editează
+const handleClick = () => {
+  console.log('clicked');
+};
+⚠️ Folosește Funcții Tradiționale când:
+Ai nevoie de propriul this (ex: metode în obiecte)
+
+js
+Copiază
+Editează
+const person = {
+  name: 'Alice',
+  greet() {
+    console.log(`Hi, I'm ${this.name}`);
+  }
+};
+Scrii constructori (folosești new)
+
+js
+Copiază
+Editează
+function Car(model) {
+  this.model = model;
+}
+
+const myCar = new Car('Dacia');
+Ai nevoie de obiectul arguments (nu există în arrow)
+
+js
+Copiază
+Editează
+function sum() {
+  return Array.from(arguments).reduce((a, b) => a + b, 0);
+}
+
+/*🔍 Context: this în JavaScript
+În JavaScript, comportamentul lui this depinde de tipul de funcție:
+
+🔁 Funcțiile normale (function() { ... }) — își stabilesc propriul this în funcție de contextul de apel.
+
+📌 Funcțiile săgeată (()=>{...}) — nu au propriul this; ele moștenesc this din contextul în care au fost definite.
+
+🔬 Ce se întâmplă aici?
+js
+Copiază
+Editează
+setTimeout(function(){
+  console.log('Function:' + this.name)
+}, 100)
+Această funcție nu e o funcție săgeată ⇒ this nu mai e instanța person, ci este:
+
+în strict mode: undefined
+
+în modul normal: window (în browser) sau global (în Node.js)
+
+Deci, this.name va fi undefined sau '', nu "Bob".
+
+✅ De ce merge cu funcția săgeată?
+js
+Copiază
+Editează
+setTimeout(()=>{
+  console.log('Arrow:' + this.name)
+}, 100)
+Funcția săgeată moștenește this din printNameArrow(), iar acolo this este person ⇒ așa că this.name este "Bob".
+
+🧠 Rezumat intuitiv
+Tip funcție	this este...	Ce se afișează
+()=>{}	moștenit din metoda Person	Arrow:Bob
+function(){}	propriul context (window, undefined)	Function:undefined
+
+Vrei să forțezi funcția normală să folosească this corect? Poți folosi .bind(this):
+
+js
+Copiază
+Editează
+setTimeout(function(){
+  console.log('Function:' + this.name)
+}.bind(this), 100) */

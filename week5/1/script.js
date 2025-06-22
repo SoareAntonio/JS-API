@@ -14,6 +14,15 @@ function buildSearchURL(baseURL, { search = '', page = 1, limit = 10, sortBy = '
 Punem valori implicite pentru fiecare câmp – dacă utilizatorul nu trimite un anumit câmp, se folosește valoarea default:
 = {} – foarte important: dacă utilizatorul nu trimite deloc al doilea parametru, funcția tot funcționează, pentru că îl înlocuiește cu un obiect gol.
 
+
+Diferență față de set():
+append() ➜ adaugă o valoare în plus (chiar dacă cheia există deja)
+Adaugă o pereche cheie=valoare în șirul de parametri.
+
+Dacă cheia există deja, NU o suprascrie, ci o adaugă din nou (poți avea mai multe instanțe ale aceleiași chei).
+
+set() ➜ înlocuiește valoarea pentru o cheie deja existentă
+
 Ce este URLSearchParams
 Este o clasă nativă în JavaScript (în browser și în Node.js) care te ajută să creezi, editezi și encodezi automat query string-uri (adică partea aia după ? în URL).
 Creează un obiect gol, în care poți adăuga parametri unul câte unul, ca într-un dicționar, dar cu encode automat:
@@ -79,49 +88,7 @@ Returnează un obiect structurat cu:
 status: Codul HTTP (e.g., 200).
 headers: Toate headerele (convertite din Headers la obiect JS).
 body: Conținutul parsat (sau null dacă există eroare). */
-function parseHttpResponse(response) {
-  // Separăm headerele de corp
-  const [headerPart, body] = response.split('\r\n\r\n');
 
-  // Separăm liniile din headere
-  const lines = headerPart.split('\r\n');
-
-  // Linia de status (ex: HTTP/1.1 200 OK)
-  const statusLine = lines[0];
-  const [protocol, statusCode, ...statusMessageParts] = statusLine.split(' ');
-  const statusMessage = statusMessageParts.join(' ');
-
-  // Parsăm headerele rămase
-  const headers = {};
-  for (let i = 1; i < lines.length; i++) {
-    const [key, value] = lines[i].split(': ');
-    headers[key] = value;
-  }
-
-  return {
-    protocol,
-    statusCode: parseInt(statusCode, 10),
-    statusMessage,
-    headers,
-    body
-  };
-}
-const rawResponse = `HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: 20\r\n\r\n<h1>Hello</h1>`;
-const result = parseHttpResponse(rawResponse);
-
-console.log(result);
-/*
-{
-  protocol: 'HTTP/1.1',
-  statusCode: 200,
-  statusMessage: 'OK',
-  headers: {
-    'Content-Type': 'text/html',
-    'Content-Length': '20'
-  },
-  body: '<h1>Hello</h1>'
-}
-*/
 
 /*Exercițiul 3: Creează un mic sistem de cache pentru cererile HTTP care: 
 Salvează răspunsurile pe baza URL-ului
@@ -194,87 +161,48 @@ async function fetchWithCache(url) {
 })();
 
 /*Exercițiul 4: Implementează o funcție care convertește diferite formate de date (query string, form data, JSON) între ele. */
-function parseQueryString(qs) {
-  return Object.fromEntries(new URLSearchParams(qs));
-}
+function convertData(input, fromType, toType) {
+  let obj;
 
-function objectToQueryString(obj) {
-  return new URLSearchParams(obj).toString();
-}
-
-function formDataToObject(formData) {
-  return Object.fromEntries(formData.entries());
-}
-
-function jsonToFormData(json) {
-  const fd = new FormData();
-  Object.entries(json).forEach(([key, value]) => fd.append(key, value));
-  return fd;
-}
-
-// Exemple:
-// parseQueryString('name=ion&age=30')
-// objectToQueryString({ name: 'ion', age: 30 })
-// jsonToFormData({ name: 'ana', email: 'a@b.com' })
-
-//varianta doi
-
-function convertDataFormat(input, from, to) {
-  let dataObj;
-
-  // Pasul 1: Convertim totul mai întâi într-un obiect JS
-  switch (from) {
+  // Parsăm în obiect JS
+  switch (fromType) {
     case 'query':
-      dataObj = Object.fromEntries(new URLSearchParams(input));
+      obj = Object.fromEntries(new URLSearchParams(input));
       break;
-
-    case 'formdata':
-      if (input instanceof FormData) {
-        dataObj = Object.fromEntries(input.entries());
-      } else {
-        dataObj = { ...input }; // presupunem că e deja obiect
-      }
+    case 'form':
+      obj = Object.fromEntries(new FormData(input)); // input e un <form> element
       break;
-
     case 'json':
-      dataObj = typeof input === 'string' ? JSON.parse(input) : input;
+      obj = JSON.parse(input);
       break;
-
     default:
-      throw new Error('Format de intrare necunoscut: ' + from);
+      throw new Error('Format de intrare necunoscut');
   }
 
-  // Pasul 2: Convertim obiectul JS în formatul dorit
-  switch (to) {
+  // Convertim din obiect JS în formatul dorit
+  switch (toType) {
     case 'query':
-      return new URLSearchParams(dataObj).toString();
-
-    case 'formdata':
-      const fd = new FormData();
-      for (const [key, value] of Object.entries(dataObj)) {
-        fd.append(key, value);
-      }
-      return fd;
-
+      return new URLSearchParams(obj).toString();
+    case 'form':
+      const form = new FormData();
+      for (let key in obj) form.append(key, obj[key]);
+      return form;
     case 'json':
-      return JSON.stringify(dataObj);
-
+      return JSON.stringify(obj, null, 2);
     default:
-      throw new Error('Format de ieșire necunoscut: ' + to);
+      throw new Error('Format de ieșire necunoscut');
   }
 }
 
-// 1. Query string → JSON
-console.log(convertDataFormat('name=John&age=30', 'query', 'json')); 
-// => '{"name":"John","age":"30"}'
+// Query string -> JSON
+let query = "name=Antonio&age=21";
+console.log(convertData(query, "query", "json"));
 
-// 2. JSON → Query string
-console.log(convertDataFormat({ name: 'Ana', lang: 'JS' }, 'json', 'query')); 
-// => 'name=Ana&lang=JS'
+// JSON -> Query string
+let json = '{"name":"Ana","job":"Dev"}';
+console.log(convertData(json, "json", "query"));
 
-// 3. JSON → FormData
-const fd = convertDataFormat({ a: '1', b: '2' }, 'json', 'formdata');
-for (const pair of fd.entries()) {
-  console.log(pair); 
-}
-// => ['a', '1'], ['b', '2']
+// Form element -> JSON
+let formEl = document.querySelector('form');
+let jsonFromForm = convertData(formEl, "form", "json");
+
