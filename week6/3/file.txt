@@ -1,0 +1,25 @@
+Întrebări frecvente
+
+map este mai lent decât for?
+
+În benchmark-uri izolate, for poate fi puțin mai rapid, dar în aplicații reale avantajul de lizibilitate și immutabilitate al map/filter este mai important.
+
+
+
+Pot opri un forEach cu break?
+
+Nu, forEach nu suportă break. Folosește for/for…of sau some/every pentru a ieși anticipat.
+
+
+
+Cum evit mutarea (mutation) accidentală?
+
+Folosește operatorul spread pentru a crea copii.
+• Evită metodele „mutative” precum push, splice, sort fără copie prealabilă.
+
+Principii de Programare Funcțională
+1. Imutabilitate – Nu modifica obiectele/array-urile originale.
+2. Funcții pure – Aceeași intrare ⇒ aceeași ieșire, fără efecte secundare.
+3. Compoziție – Combină funcții mici pentru a construi logica.
+În React, aceste principii ajută la prevenirea bug-urilor legate de state și la
+re-randări eficiente.

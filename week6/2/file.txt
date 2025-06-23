@@ -1,0 +1,14 @@
+Întrebări frecvente
+Există diferențe de performanță între spread și Array.prototype.concat?
+
+Diferențele sunt nesemnificative în majoritatea aplicațiilor. Spread oferă un cod mai concis și lizibil.
+
+
+Pot folosi spread pentru a face deep copy?
+
+Nu. Spread realizează doar copii superficiale. Pentru copii adânci folosește librării precum lodash.cloneDeep sau structuredClone (în browser-ele moderne).
+
+
+Când să folosesc rest parameters vs arguments?
+
+arguments nu este disponibil într-o arrow function și este un obiect-pseudo, pe când rest parameters oferă un array real și este preferat în ES6+.

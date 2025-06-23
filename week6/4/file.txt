@@ -1,0 +1,196 @@
+1. Renaming import
+
+import { add as sum } from './math.js';
+
+Aici importi funcția add din math.js, dar o redenumești local în sum.
+Practic, folosești un alias ca să nu folosești numele original add.
+Folosești când vrei să eviți conflicte de nume sau să ai un nume mai clar în contextul tău.
+
+
+console.log(sum(2, 3)); // folosești sum în loc de add
+
+2. Namespace import
+
+import * as math from './math.js';
+
+Aici imporți toate exporturile din math.js sub un singur obiect numit math.
+Așa accesezi funcțiile sau constantele cu math.add(), math.substract(), etc.
+Ideal când vrei să grupezi toate funcționalitățile unui modul sub un singur nume, clar și organizat.
+
+
+Întrebări frecvente
+
+Ce diferență este între module.exports (CommonJS) și export (ESM)?
+
+module.exports este specific Node.js (CommonJS). ES Modules (export) sunt standardul modern și funcționează nativ în browser. Transpilatoarele pot converti între ele.
+
+
+
+Pot avea mai multe default export într-un fișier?
+
+Nu, un fișier poate avea doar un singur export implicit (export default).
+
+
+
+Sunt clasele mai lente decât obiectele simple?
+
+Diferențele de performanță sunt minime. Alege classes pentru OOP clar și obiecte simple pentru structură de date.
+
+
+
+Când să folosesc closure vs class?
+Closure pentru funcții factory ușoare și incapsulare simplă.
+• Class când ai nevoie de moștenire, instanțe multiple și OOP structurat.
+
+Structurile de date sunt moduri de organizare și stocare a datelor în memorie, astfel încât să poți accesa și manipula eficient acele date.
+
+🧠 Gândește-le așa:
+Ai un sertar cu documente — structura de date e felul în care le organizezi: în dosare (liste), pe categorii (dicționare), în ordine alfabetică (arbori) etc.
+
+📦 Exemple de structuri de date comune:
+Structură	Ce e	Exemplu în JS
+Array	listă ordonată	[1, 2, 3]
+Object	cheie → valoare	{nume: 'Ana', varsta: 25}
+Set	colecție fără duplicate	new Set([1, 2, 2, 3]) → 1, 2, 3
+Map	chei arbitrare → valori	new Map([[1, 'unu'], [2, 'doi']])
+Stack	LIFO (ultimul intrat, primul iese)	push/pop
+Queue	FIFO (primul intrat, primul iese)	push/shift
+Linked List, Tree, Graph	structuri avansate	folosite în algoritmi
+
+🧩 La ce folosesc?
+🔍 Căutare rapidă → Map, Object
+
+📋 Menținerea ordinii → Array, Queue
+
+🧮 Operări matematice, backtracking → Stack
+
+🧠 Reprezentare de relații complexe → Tree, Graph
+
+Întrebarea ta e foarte bună și esențială! Hai să o explic clar:
+
+🎯 Care e scopul structurilor de date într-un proiect?
+Structurile de date sunt modulul prin care organizăm și manipulăm datele într-un mod eficient.
+
+Gândește-te la ele ca la instrumente de organizare, la fel cum ai: cutii, fișiere, rafturi, mape — fiecare potrivit pentru un anumit tip de informație sau scop.
+
+🧠 De ce sunt importante?
+Eficiență
+Dacă alegi structura potrivită, aplicația e mai rapidă și mai simplă.
+
+Claritate în cod
+Structura bună = cod clar, logic și ușor de întreținut.
+
+Rezolvă probleme reale
+De exemplu:
+
+Stack = "undo"/"redo"
+
+Queue = procesare emailuri, mesaje
+
+Set = eliminare duplicate din listă
+
+Map = memorare de configurări rapide pe baza unui ID
+
+📦 Exemple de aplicații reale
+Funcționalitate	Structură folosită
+Istoric browser / Undo	Stack
+Chat / task queue	Queue
+Stocare useri după ID	Object sau Map
+Eliminare duplicate din listă	Set
+Reprezentare DOM sau meniu	Tree
+Rețea socială (prieteni, conexiuni)	Graph
+
+🧪 Cum le înveți?
+Cel mai bine: le înveți prin aplicații concrete. De exemplu:
+
+Faci un ToDo List? → folosești array.
+
+Creezi un editor de text? → stack pentru undo.
+
+Creezi un sistem de notificări? → queue.
+
+Creezi un site de produse? → obiecte/map pentru produse.
+
+Vrei să-ți dau o listă de mini-proiecte, fiecare concentrat pe o structură de date?
+Poți alege dintre: stack, queue, set sau altele.
+
+✅ Closure – când e ideal?
+Closure-urile sunt bune pentru:
+
+funcții factory rapide
+
+incapsulare simplă (ascundere variabile interne)
+
+stare persistentă fără clasă
+
+cod funcțional, minimalist
+
+🧪 Exemplu:
+js
+Copiază
+Editează
+function createCounter() {
+  let count = 0
+  return {
+    increment: () => ++count,
+    reset: () => count = 0
+  }
+}
+
+const counter1 = createCounter()
+counter1.increment() // 1
+counter1.increment() // 2
+Avantaje closure:
+
+Nu ai nevoie de new
+
+Variabilele interne sunt private
+
+Cod concis, ușor pentru logică simplă
+
+✅ Class – când e potrivită?
+Clasa e bună când:
+
+ai instanțe multiple de obiecte
+
+vrei moștenire (extends)
+
+vrei un model clar de OOP (encapsulation, inheritance, polymorphism)
+
+folosești design patterns (ex: Factory, Singleton)
+
+🧪 Exemplu:
+js
+Copiază
+Editează
+class Counter {
+  constructor() {
+    this.count = 0
+  }
+  increment() {
+    return ++this.count
+  }
+  reset() {
+    this.count = 0
+  }
+}
+
+const c1 = new Counter()
+c1.increment() // 1
+Avantaje class:
+
+Claritate în structură OOP
+
+Suportă extends și super
+
+Bună pentru sisteme mari și scalabile
+
+🔄 Comparativ
+Criteriu	Closure	Class
+Scurt, rapid	✅ Da	❌ Mai mult boilerplate
+Date private	✅ Implicit	❌ Trebuie workaround
+Instanțe multiple	✅ Da	✅ Da
+Moștenire (extends)	❌ Nu	✅ Da
+OOP clar	❌ Nu	✅ Da
+Ideal pentru	Funcții mici, factory	Sisteme mari, arhitectură
+
