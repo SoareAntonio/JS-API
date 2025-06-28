@@ -1,0 +1,17 @@
+{
+  "name": "advanced-npm-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node dist/app.js",
+    "dev": "nodemon --watch src --ext js,json src/app.js",
+    "build": "npm run clean && npm run copy-files",
+    "postbuild": "echo '✅ Build completed successfully!'",
+    "clean": "rm -rf dist/ && mkdir -p dist",
+    "copy-files": "cp -r src/* dist/",
+    "setup": "npm install && npm run build && echo 'Setup complete!'",
+    "reset": "npm run clean && npm install && npm run build"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
