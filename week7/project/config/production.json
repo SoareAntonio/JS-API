@@ -1,0 +1,12 @@
+{
+  "database": {
+    "host": "prod.db.example.com",
+    "port": 5432,
+    "username": "produser",
+    "password": "prodpass"
+  },
+  "featureFlags": {
+    "enableAnalytics": true,
+    "useCaching": true
+  }
+}

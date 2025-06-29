@@ -1,0 +1,12 @@
+{
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "username": "devuser",
+    "password": "devpass"
+  },
+  "featureFlags": {
+    "enableAnalytics": false,
+    "useCaching": false
+  }
+}
