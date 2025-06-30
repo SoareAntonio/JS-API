@@ -1,0 +1,9 @@
+Sfaturi pentru învățare eficientă 
+
+Practică hands-on: React se învață cel mai bine prin construirea de aplicații mici
+Gândește în componente: Privește orice interfață ca un puzzle de componente reutilizabile
+Nu te grăbi cu conceptele avansate: Stăpânește baza înainte să mergi la Redux, Hooks complexe, etc.
+Folosește React Developer Tools: Te va ajuta să înțelegi cum funcționează aplicația
+Participă la comunitate: React are una dintre cele mai active comunități
+Citește cod existent: Înțelege cum sunt structurate proiectele reale
+Experimentează cu exemple simple: Începe cu mici experimente înainte de proiecte mari
