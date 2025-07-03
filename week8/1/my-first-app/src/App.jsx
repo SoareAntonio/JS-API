@@ -5,6 +5,9 @@ import Exercitiul3 from './exercitii/Exercitiul3';
 import {UserProfile,UserCard2,UserCard,Button} from './exercitii/Exemplu1';
 import { ProductImage,ProductCard,AddToCartButton,Price,Rating,ProductTitle } from './exercitii/Exemplul2';
 import { ContactList ,StatusBadge} from './exercitii/3exercitii';
+import { LikeButton,TextInput ,Counter,UserProfile3 } from './exercitii/State';
+import { ContactForm } from './exercitii/Formular';
+import { Counter2 } from './exercitii/Counter';
 
 /*function App() {
   const handleAddToCart = (product) => {
@@ -25,7 +28,7 @@ import { ContactList ,StatusBadge} from './exercitii/3exercitii';
   )
 }*/
 
-function App() {
+/*function App() {
   const contacte = [
     {
       name: 'Maria Popescu',
@@ -56,6 +59,27 @@ function App() {
     </div>
     </>
   );
+}*/
+
+/*function App() {
+  return (
+    <>
+      <LikeButton />
+      <Counter />
+      <TextInput />
+      <UserProfile3 />
+    </>
+  )
+}*/
+
+function App(){
+  return (
+    <>
+      <Counter2></Counter2>
+    </>
+  )
 }
+
+
 
 export default App;

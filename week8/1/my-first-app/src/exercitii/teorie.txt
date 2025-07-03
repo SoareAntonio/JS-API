@@ -1,0 +1,83 @@
+Cum îți amintești informații care se schimbă de-a lungul timpului?
+Răspuns:
+Folosești state (stare) în componente. State-ul e o "memorie internă" a componentei care reține datele care pot varia în timp (ex: numărul de like-uri, textul dintr-un formular, un toggle on/off).
+
+În React, folosești hook-ul useState pentru asta.
+
+Ce se întâmplă când faci click pe un buton de "Like" - cum știe aplicația să afișeze starea nouă?
+Răspuns:
+Când dai click pe buton, apelezi o funcție care schimbă state-ul (ex: setLikes(likes + 1)). React detectează schimbarea și reactualizează UI-ul automat — asta se numește re-render.
+
+Cum ai gestiona informațiile dintr-un formular pe măsură ce utilizatorul scrie?
+Răspuns:
+Păstrezi datele din input-uri în state (ex: const [name, setName] = useState('')) și le actualizezi cu un handler pe onChange (ex: onChange={e => setName(e.target.value)}).
+
+Astfel, state-ul componentei e sincronizat cu ce scrie utilizatorul, iar tu ai mereu control asupra datelor din formular.
+
+// 1. Organizarea componentelor
+// ✅ Do: O componentă per fișier, cu nume descriptive
+function UserProfileCard({ user, onEdit }) {
+  return <div className="user-profile-card">{/* JSX aici */}</div>
+}
+
+// ❌ Don't: Componente multiple în același fișier
+function Component1() {}
+function Component2() {}
+
+// 2. Destructuring props
+// ✅ Do: Destructuring pentru props des folosite
+function ProductCard({ title, price, image, onAddToCart }) {
+  return (
+    <div>
+      <h3>{title}</h3>
+      <span>${price}</span>
+      {/* etc */}
+    </div>
+  )
+}
+
+// ❌ Don't: props.ceva peste tot
+function ProductCard(props) {
+  return (
+    <div>
+      <h3>{props.title}</h3>
+      <span>${props.price}</span>
+    </div>
+  )
+}
+
+// 3. State management
+// ✅ Do: State minimal și focalizat
+const [isLoading, setIsLoading] = useState(false)
+const [error, setError] = useState(null)
+const [data, setData] = useState([])
+
+// ❌ Don't: Un state uriaș pentru tot
+const [appState, setAppState] = useState({
+  isLoading: false,
+  error: null,
+  data: [],
+  user: {},
+  cart: [],
+  // ... alte 20 de proprietăți
+})
+
+// 4. Event handlers
+// ✅ Do: Funcții clare și descriptive
+const handleAddToCart = (product) => {
+  setCart([...cart, product])
+}
+
+const handleRemoveFromCart = (productId) => {
+  setCart(cart.filter((item) => item.id !== productId))
+}
+
+### Cum mă pregătesc pentru un proiect React real?
+
+**Răspuns**:
+
+1. **Explorează proiecte open-source** pe GitHub
+2. **Practică cu proiecte mici** - to-do app, weather app, etc.
+3. **Învață instrumentele** - React DevTools, VS Code extensions
+4. **Citește documentația** React oficială
+5. **Înțelege ecosistemul** - npm, bundlers, linting
