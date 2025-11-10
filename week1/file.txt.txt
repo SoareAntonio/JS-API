@@ -67,8 +67,10 @@ console.log(Number('3.14'));
 3. 
 
 let age = 30;
-let isInRange = age >= 18 && age <= 65;
-console.log("Is age between 18 and 65?", isInRange);
+if(age <18 ||age >65)
+console.log("Is not age between 18 and 65");
+else 
+console.log("Este");
 
 
 4. 
