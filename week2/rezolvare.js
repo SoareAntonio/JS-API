@@ -70,3 +70,104 @@ function calculeazaVarstaMedie(persoane) {
   const sumaVarstelor = persoane.reduce((total, persoana) => total + persoana.age, 0);
   return sumaVarstelor / persoane.length;
 }
+
+const car={
+  brand:"Toyota",
+  model:"Corolla",
+  year:2020,
+  color:"albastru",
+
+  displayDetails:function(){
+    return `Masina este un ${this.brand} ${this.model},fabricat in ${this.year},culoare ${this.color}`;
+  }
+};
+
+console.log(car.displayDetails());
+
+const person = {
+  name: 'Ion Popescu',
+  weight: 80, // kg
+  height: 1.8, // m
+
+  calculateBMI: function() {
+    return this.weight / (this.height * this.height);
+  }
+};
+
+console.log(`${person.name} are un BMI de ${person.calculateBMI().toFixed(2)}`);
+
+
+function mergePeople(person1,person2){
+  const merged={...person1};//Creezi o copie a primului obiect (shallow copy) în merged
+  for(const key in person2){
+    if(merged.hasOwnProperty(key)){//Dacă merged are deja acea proprietate, atunci
+      merged[key]=[merged[key],person2[key]];//Creezi un array cu ambele valori [person1[key], person2[key]] pentru a nu pierde niciuna.
+    }else{
+      merged[key]=person2[key];//Dacă cheia nu există deja, adaug-o direct
+    }
+  }
+  return merged;
+}
+const personA={name:"Ana",age:25,city:"Cluj"};
+const personB={name:"Ion",age:30,city:"Engineer"};
+console.log(mergePeople(personA,personB));
+
+const deepCopy = JSON.parse(JSON.stringify(original));
+function deepClone(obj) {
+  if (obj === null || typeof obj !== 'object') {
+    return obj; // returnează valoarea dacă nu este obiect
+  }
+
+  // Clonare pentru array
+  if (Array.isArray(obj)) {
+    return obj.map(item => deepClone(item));
+  }
+
+  // Clonare pentru obiect
+  const clone = {};
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      clone[key] = deepClone(obj[key]); // apel recursiv
+    }
+  }
+  return clone;
+}
+
+const bankAccount = {
+  owner: "Ion Popescu",
+  balance: 1000,
+
+  deposit: function(amount) {
+    if (amount <= 0) {
+      return "Suma depusă trebuie să fie mai mare decât 0.";
+    }
+    this.balance += amount;
+    return `Depunere reușită: +${amount} RON. Sold curent: ${this.balance} RON.`;
+  },
+
+  withdraw: function(amount) {
+    if (amount <= 0) {
+      return "Suma retrasă trebuie să fie mai mare decât 0.";
+    }
+    if (amount > this.balance) {
+      return `Fonduri insuficiente. Sold disponibil: ${this.balance} RON.`;
+    }
+    this.balance -= amount;
+    return `Retragere reușită: -${amount} RON. Sold curent: ${this.balance} RON.`;
+  },
+
+  checkBalance: function() {
+    return `Soldul contului pentru ${this.owner} este: ${this.balance} RON.`;
+  }
+};
+console.log(bankAccount.checkBalance());
+// Soldul contului pentru Ion Popescu este: 1000 RON.
+
+console.log(bankAccount.deposit(500));
+// Depunere reușită: +500 RON. Sold curent: 1500 RON.
+
+console.log(bankAccount.withdraw(200));
+// Retragere reușită: -200 RON. Sold curent: 1300 RON.
+
+console.log(bankAccount.withdraw(2000));
+// Fonduri insuficiente. Sold disponibil: 1300 RON.
